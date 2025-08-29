@@ -74,7 +74,7 @@ button:hover { background: #000fff; }
   <button type="submit">Submit</button>
 </form>
 
-
+<div id="loading" style="text-align:center;">Loading...</div>
 <div id="accordionContainer"></div>
 
 <script>
@@ -100,10 +100,15 @@ form.addEventListener('submit', e=>{
 
 // Fetch data dari Sheet → tampilkan accordion (urut terbaru di atas)
 function loadData(){
+   document.getElementById('loading').style.display = 'block'; // tampilkan loading
+
   fetch(url)
-    .then(res=>res.json())
-    .then(data=>{
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('loading').style.display = 'none'; // sembunyiin loading
       container.innerHTML = '';
+
+
       
       data.reverse().forEach(t => {
   // Format tanggal
