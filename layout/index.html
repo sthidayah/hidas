@@ -36,7 +36,7 @@
         .wrapper {
             display: grid;
             grid-template-columns: 3fr 1fr;
-            gap: 20px;
+            gap: 30px;
             padding: 140px 1rem 70px;
         }
         .container {
@@ -45,7 +45,7 @@
             justify-content: center;
             align-items: center; 
             background-color: ghostwhite;
-            padding: 2rem 0;
+            margin: 2rem 0;
         }
         article {
             display: grid;
@@ -67,7 +67,12 @@
         }
         @media (min-width: 768px) {
            #aside {
-              height: 500px;
+              height: 450px;
+           }
+        }
+        @media (min-width: 1000px) {
+           #aside {
+              height: 300px;
            }
         }
         @media (max-width: 768px) {
