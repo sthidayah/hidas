@@ -39,13 +39,15 @@
             gap: 20px;
             padding: 140px 1rem 70px;
         }
+        section {
+            padding: 1rem 0;
+        }
         .container {
-            display: flex; min-height: 150px;
+            display: flex; 
+            min-height: 150px;
             justify-content: center;
             align-items: center; 
             background-color: ghostwhite;
-            flex-direction: column;
-            padding: 1rem 0;
         }
         article {
             display: grid;
@@ -54,7 +56,6 @@
         }
         .article {
             display: flex;
-            flex-direction: column;
             background-color: ghostwhite;
             height: 250px;
             justify-content: center;
@@ -66,7 +67,7 @@
            align-items: center;
            background-color: ghostwhite;
         }
-        @media (max-width: 1023px) {
+        @media (min-width: 1023px) {
            #aside {
               height: 500px;
            }
