@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hida's Thoughts</title>
+<style>
+body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #fafafa; }
+h2 { text-align: center; color: #333; }
+form { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+input, textarea, button { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; }
+button { background: #4CAF50; color: white; font-weight: bold; cursor: pointer; }
+button:hover { background: #45a049; }
+.accordion { background: #eee; cursor: pointer; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; transition: 0.2s; }
+.accordion:hover { background: #ddd; }
+.panel { padding: 10px; display: none; border: 1px solid #ccc; border-top: none; border-radius: 0 0 5px 5px; background: #fff; }
+</style>
+</head>
+<body>
+
+<h2>Hida's Thoughts</h2>
+
+<form id="form">
+  <input type="date" id="tanggal" required>
+  <input type="text" id="judul" placeholder="Judul" required>
+  <textarea id="text" placeholder="Tulis disini..." required></textarea>
+  <button type="submit">Submit</button>
+</form>
+
+<hr>
+
+<div id="accordionContainer"></div>
+
+<script>
+const url = 'https://script.google.com/macros/s/AKfycbw1v4GTE9_cW68YKTK7Ba6gPlS_wEsa9GoAxOwKdr36sMen2qY4NLYvh4HNilajRbdH/exec';
+const container = document.getElementById('accordionContainer');
+const form = document.getElementById('form');
+
+// Submit form ke Google Apps Script
+form.addEventListener('submit', e=>{
+  e.preventDefault();
+  const tanggal = document.getElementById('tanggal').value;
+  const judul = document.getElementById('judul').value;
+  const text = document.getElementById('text').value;
+
+  fetch(url, {
+    method: 'POST',
+    body: new URLSearchParams({tanggal, judul, text})
+  }).then(res=>{
+    form.reset();
+    loadData();
+  });
+});
+
+// Fetch data dari Sheet → tampilkan accordion (urut terbaru di atas)
+function loadData(){
+  fetch(url)
+    .then(res=>res.json())
+    .then(data=>{
+      container.innerHTML = '';
+      data.reverse().forEach(t=>{
+        const acc = document.createElement('div');
+        acc.className = 'accordion';
+        acc.textContent = t.tanggal + ' - ' + t.judul;
+
+        const panel = document.createElement('div');
+        panel.className = 'panel';
+        panel.textContent = t.text;
+
+        acc.onclick = () => {
+          panel.style.display = panel.style.display==='block'?'none':'block';
+        }
+
+        container.appendChild(acc);
+        container.appendChild(panel);
+      });
+    });
+}
+
+// Load saat pertama kali
+loadData();
+</script>
+
+</body>
+</html>
