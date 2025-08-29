@@ -1,71 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Hida's Thoughts</title>
+<meta charset="UTF-8">
+<title>Hida's Thoughts</title>
 <style>
 body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #fafafa; }
-
 h1 { text-align: center; color: #333; }
-p {text-align:center;}
+p { text-align:center; }
 
 form { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
 input, textarea, button { width: 95%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; }
 
 button { background: #000; color: white; font-weight: bold; cursor: pointer; }
-
 button:hover { background: #000fff; }
 
 .accordion { background: #eee; cursor: pointer; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; transition: 0.2s; }
-
 .accordion:hover { background: #ddd; }
 
 .panel { padding: 10px; display: none; border: 1px solid #ccc; border-top: none; border-radius: 0 0 5px 5px; background: #fff; }
 
-#accordionContainer, #loading {margin-top: 25px;}
+#accordionContainer, #loading { margin-top: 25px; }
 
-/* ---------------- Media Query (HP / tablet) ---------------- */
+/* Media Query (HP / tablet) */
 @media screen and (max-width: 480px) {
-  body {
-    padding: 10px;
-    max-width: 100%; /* full layar HP */
-  }
-
-  input, textarea, button {
-    font-size: 16px; /* lebih kecil supaya muat layar HP */
-    padding: 8px;
-  }
-
-  .accordion, .panel {
-    font-size: 14px;
-    padding: 8px;
-  }
+  body { padding: 10px; max-width: 100%; }
+  input, textarea, button { font-size: 16px; padding: 8px; }
+  .accordion, .panel { font-size: 14px; padding: 8px; }
 }
 
-/* ---------------- Media Query (Tablet / layar sedang) ---------------- */
+/* Media Query (Tablet / layar sedang) */
 @media screen and (max-width: 768px) {
-  body {
-    max-width: 90%;
-  }
-
-  input, textarea, button {
-    font-size: 18px;
-  }
-
-  .accordion, .panel {
-    font-size: 16px;
-    padding: 10px;
-  }
+  body { max-width: 90%; }
+  input, textarea, button { font-size: 18px; }
+  .accordion, .panel { font-size: 16px; padding: 10px; }
 }
-
 </style>
 </head>
 <body>
 
 <h1>Hida's Thoughts</h1>
-<p>This is Hida's Log. Build with HARGH! and ChatGPT.<br> Only me can post on this page. Hi! o/</p>
-
+<p>This is Hida's Log. Build with HARGH! and ChatGPT.<br>Only me can post on this page. Hi! o/</p>
 
 <form id="form">
   <input type="date" id="tanggal" required>
@@ -74,11 +49,7 @@ button:hover { background: #000fff; }
   <button type="submit">Submit</button>
 </form>
 
-
-
 <div id="loading" style="text-align:center;">Loading...</div>
-
-
 <div id="accordionContainer"></div>
 
 <script>
@@ -86,8 +57,12 @@ const url = 'https://script.google.com/macros/s/AKfycbxx-70r6_nJrRB6A9n1odb0Xx3K
 const container = document.getElementById('accordionContainer');
 const form = document.getElementById('form');
 
+const batchSize = 10;
+let allData = [];
+let renderedCount = 0;
+
 // Submit form ke Google Apps Script
-form.addEventListener('submit', e=>{
+form.addEventListener('submit', e => {
   e.preventDefault();
   const tanggal = document.getElementById('tanggal').value;
   const judul = document.getElementById('judul').value;
@@ -96,48 +71,72 @@ form.addEventListener('submit', e=>{
   fetch(url, {
     method: 'POST',
     body: new URLSearchParams({tanggal, judul, text})
-  }).then(res=>{
+  }).then(res => {
     form.reset();
     loadData();
   });
 });
 
-// Fetch data dari Sheet → tampilkan accordion (urut terbaru di atas)
-function loadData(){
-   document.getElementById('loading').style.display = 'block'; // tampilkan loading
-
+// Load data & lazy load
+function loadData() {
+  document.getElementById('loading').style.display = 'block';
   fetch(url)
     .then(res => res.json())
     .then(data => {
-      document.getElementById('loading').style.display = 'none'; // sembunyiin loading
+      document.getElementById('loading').style.display = 'none';
+      allData = data.reverse(); // urut terbaru di atas
+      renderedCount = 0;
       container.innerHTML = '';
+      renderBatch();
+    });
+}
 
+// Render batch item
+function renderBatch() {
+  const end = Math.min(renderedCount + batchSize, allData.length);
+  for (let i = renderedCount; i < end; i++) {
+    const t = allData[i];
 
-      
-      data.reverse().forEach(t => {
-  // Format tanggal
-  let date = new Date(t.tanggal);
-  let formattedDate = ("0" + date.getDate()).slice(-2) + "." +
-                      ("0" + (date.getMonth()+1)).slice(-2) + "." +
-                      date.getFullYear().toString().slice(-2);
+    // Format tanggal DD.MM.YY
+    let date = new Date(t.tanggal);
+    let formattedDate = ("0"+date.getDate()).slice(-2) + "." +
+                        ("0"+(date.getMonth()+1)).slice(-2) + "." +
+                        date.getFullYear().toString().slice(-2);
 
-  const acc = document.createElement('div');
-  acc.className = 'accordion';
-  acc.textContent = formattedDate + ' - ' + t.judul;
+    const acc = document.createElement('div');
+    acc.className = 'accordion';
+    acc.textContent = formattedDate + ' - ' + t.judul;
 
-  const panel = document.createElement('div');
-  panel.className = 'panel';
-  panel.textContent = t.text;
+    const panel = document.createElement('div');
+    panel.className = 'panel';
+    panel.textContent = t.text;
 
-  acc.onclick = () => {
-    panel.style.display = panel.style.display==='block'?'none':'block';
+    acc.onclick = () => {
+      panel.style.display = panel.style.display==='block'?'none':'block';
+    }
+
+    container.appendChild(acc);
+    container.appendChild(panel);
   }
 
-  container.appendChild(acc);
-  container.appendChild(panel);
-});
+  renderedCount = end;
 
-    });
+  let loadMore = document.getElementById('loadMore');
+  if (!loadMore) {
+    loadMore = document.createElement('button');
+    loadMore.id = 'loadMore';
+    loadMore.textContent = 'Tampilkan lebih banyak';
+    loadMore.style.width = '100%';
+    loadMore.style.margin = '10px 0';
+    loadMore.onclick = renderBatch;
+    container.appendChild(loadMore);
+  }
+
+  if (renderedCount >= allData.length) {
+    document.getElementById('loadMore').style.display = 'none';
+  } else {
+    document.getElementById('loadMore').style.display = 'block';
+  }
 }
 
 // Load saat pertama kali
