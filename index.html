@@ -25,6 +25,40 @@ button:hover { background: #000fff; }
 
 #accordionContainer {margin-top: 15px;}
 
+/* ---------------- Media Query (HP / tablet) ---------------- */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 10px;
+    max-width: 100%; /* full layar HP */
+  }
+
+  input, textarea, button {
+    font-size: 16px; /* lebih kecil supaya muat layar HP */
+    padding: 8px;
+  }
+
+  .accordion, .panel {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+/* ---------------- Media Query (Tablet / layar sedang) ---------------- */
+@media screen and (max-width: 768px) {
+  body {
+    max-width: 90%;
+  }
+
+  input, textarea, button {
+    font-size: 18px;
+  }
+
+  .accordion, .panel {
+    font-size: 16px;
+    padding: 10px;
+  }
+}
+
 </style>
 </head>
 <body>
