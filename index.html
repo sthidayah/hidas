@@ -66,22 +66,30 @@ function loadData(){
     .then(res=>res.json())
     .then(data=>{
       container.innerHTML = '';
-      data.reverse().forEach(t=>{
-        const acc = document.createElement('div');
-        acc.className = 'accordion';
-        acc.textContent = t.tanggal + ' - ' + t.judul;
+      
+      data.reverse().forEach(t => {
+  // Format tanggal
+  let date = new Date(t.tanggal);
+  let formattedDate = ("0" + date.getDate()).slice(-2) + "." +
+                      ("0" + (date.getMonth()+1)).slice(-2) + "." +
+                      date.getFullYear().toString().slice(-2);
 
-        const panel = document.createElement('div');
-        panel.className = 'panel';
-        panel.textContent = t.text;
+  const acc = document.createElement('div');
+  acc.className = 'accordion';
+  acc.textContent = formattedDate + ' - ' + t.judul;
 
-        acc.onclick = () => {
-          panel.style.display = panel.style.display==='block'?'none':'block';
-        }
+  const panel = document.createElement('div');
+  panel.className = 'panel';
+  panel.textContent = t.text;
 
-        container.appendChild(acc);
-        container.appendChild(panel);
-      });
+  acc.onclick = () => {
+    panel.style.display = panel.style.display==='block'?'none':'block';
+  }
+
+  container.appendChild(acc);
+  container.appendChild(panel);
+});
+
     });
 }
 
