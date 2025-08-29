@@ -19,6 +19,7 @@
             display: grid;
             grid-template-columns: 3fr 1fr;
             gap: 20px;
+            padding: 0 1rem;
             padding-top: 140px;
         }
         div.container {
@@ -26,6 +27,7 @@
             justify-content: center;
             align-items: center; 
             background-color: ghostwhite;
+            gap: 20px;
         }
         header{
             position: fixed;
@@ -49,12 +51,15 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            }
+        }
         div.article {
             background-color: ghostwhite;
             height: 250px;
             justify-content: center;
             align-items: center;
+        }
+        div.aside {
+            height: 200px;
         }
         div.footer {
            display: flex; min-height: 300px; 
@@ -85,6 +90,9 @@
 
     <div class="wrapper">
     <main>
+        <section>
+            <div class="container">SECTION</div>
+        </section>
         <article>
             <div class="article">ARTICLE</div>
             <div class="article">ARTICLE</div>
@@ -98,8 +106,8 @@
         </section>
     </main>
     <aside>
-        <div class="container">SIDE BAR</div>
-        <div class="container">SIDE BAR</div>
+        <div class="container" id="aside">SIDE BAR</div>
+        <div class="container" id="aside">SIDE BAR</div>
     </aside>
     </div>
     
