@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Hida's Thoughts</title>
+  <meta charset="UTF-8">
+  <title>Hida's Thoughts</title>
 <style>
 body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #fafafa; }
-h2 { text-align: center; color: #333; }
+
+h1 { text-align: center; color: #333; }
+
 form { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-input, textarea, button { width: 100%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; }
+
+input, textarea, button { width: 95%; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; }
+
 button { background: #4CAF50; color: white; font-weight: bold; cursor: pointer; }
+
 button:hover { background: #45a049; }
+
 .accordion { background: #eee; cursor: pointer; padding: 10px; margin: 5px 0; border-radius: 5px; border: 1px solid #ccc; transition: 0.2s; }
+
 .accordion:hover { background: #ddd; }
+
 .panel { padding: 10px; display: none; border: 1px solid #ccc; border-top: none; border-radius: 0 0 5px 5px; background: #fff; }
+
 </style>
 </head>
 <body>
 
-<h2>Hida's Thoughts</h2>
+<h1>Hida's Thoughts</h1>
+
 
 <form id="form">
   <input type="date" id="tanggal" required>
@@ -26,7 +36,6 @@ button:hover { background: #45a049; }
   <button type="submit">Submit</button>
 </form>
 
-<hr>
 
 <div id="accordionContainer"></div>
 
