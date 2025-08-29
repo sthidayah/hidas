@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simple Calculator by Hida</title>
+<style>
+  body {display:flex; justify-content:center; padding-top:20px; font-family:sans-serif;}
+  #calculator {width:400px;}
+  textarea {width:91.8%; height:100px; text-align:right; font-size:40px; padding:15px; margin-bottom:10px; border-radius:15px; resize:none; border:1px solid #ccc; overflow-x:auto;}
+  .row {display:flex; justify-content:space-between; margin-bottom:5px; }
+  .btn {flex:0 0 23%; height:80px; font-size:30px; border-radius:15px; border:none; cursor:pointer; background:#f0f0f0;}
+  .btn:active {background:#ddd;}
+</style>
+</head>
+<body>
+  <div id="calculator">
+  <textarea id="display" disabled readonly></textarea>
+
+  <!-- Row 1 -->
+  <div class="row">
+    <button class="btn" onclick="bersihkan()">C</button>
+    <button class="btn" onclick="toggleKurung()">( )</button>
+    <button class="btn" onclick="tambahOperator('%')">%</button>
+    <button class="btn" onclick="tambahOperator('/')">÷</button>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="row">
+    <button class="btn" onclick="tambahAngka('1')">1</button>
+    <button class="btn" onclick="tambahAngka('2')">2</button>
+    <button class="btn" onclick="tambahAngka('3')">3</button>
+    <button class="btn" onclick="tambahOperator('*')">×</button>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="row">
+    <button class="btn" onclick="tambahAngka('4')">4</button>
+    <button class="btn" onclick="tambahAngka('5')">5</button>
+    <button class="btn" onclick="tambahAngka('6')">6</button>
+    <button class="btn" onclick="tambahOperator('-')">–</button>
+  </div>
+
+  <!-- Row 4 -->
+  <div class="row">
+    <button class="btn" onclick="tambahAngka('7')">7</button>
+    <button class="btn" onclick="tambahAngka('8')">8</button>
+    <button class="btn" onclick="tambahAngka('9')">9</button>
+    <button class="btn" onclick="tambahOperator('+')">+</button>
+  </div>
+
+  <!-- Row 5 -->
+  <div class="row">
+    <button class="btn" onclick="plusMinus()">+/-</button>
+    <button class="btn" onclick="tambahAngka('0')">0</button>
+    <button class="btn" onclick="tambahAngka('.')">.</button>
+    <button class="btn" onclick="hitung()">=</button>
+  </div>
+</div>
+
+let display = document.getElementById('display');
+let openParens = 0; // untuk toggle kurung
+function tambahAngka(angka){
+    display.value += angka;
+}
+
+function tambahOperator(op){
+    if(display.value === '') return;
+    let lastChar = display.value.slice(-1);
+    if(['+','-','*','/','%'].includes(lastChar)){
+        display.value = display.value.slice(0,-1) + op;
+    } else {
+        display.value += op;
+    }
+}
+
+function bersihkan(){ display.value=''; openParens=0; }
+function hapus(){ display.value = display.value.slice(0,-1); }
+
+function plusMinus(){
+    let tokens = display.value.split(/([\+\-\*\/\%\(\)])/);
+    let last = tokens.pop();
+    if(last === '') return;
+    if(last.startsWith('-')) last = last.slice(1);
+    else last = '-' + last;
+    tokens.push(last);
+    display.value = tokens.join('');
+}
+  
+function toggleKurung(){
+    // kalau jumlah buka kurung lebih banyak dari tutup, tambahkan tutup
+    let openCount = (display.value.match(/\(/g) || []).length;
+    let closeCount = (display.value.match(/\)/g) || []).length;
+    if(openCount === closeCount || display.value.slice(-1).match(/[\+\-\*\/\%\(]/)){
+        display.value += '(';
+    } else {
+        display.value += ')';
+    }
+}
+
+function hitung(){
+    try{
+        let expr = display.value.replace(/÷/g,'/').replace(/×/g,'*');
+        display.value = eval(expr);
+    }catch(e){
+        display.value='Error';
+    }
+}
+
+</body>
+</html>
