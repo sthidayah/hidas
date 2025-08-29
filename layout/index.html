@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+        }
+        .outer{
+            max-width: 1024px; margin: 0 auto;
+            border: 1px solid #A5A5A5;
+            border-radius: 10px;
+        }
+        .wrapper {
+            display: grid; grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            border: 1px solid #a5a5a5;
+            border-radius: 10px;
+            padding-top: 70px;
+        }
+        .container {
+            border: 1px solid #A5A5A5;
+            border-radius: 10px;
+            display: flex; min-height: 100px; margin: 2rem 1rem;
+            justify-content: center; align-items: center; 
+        }
+        header{
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: ghostwhite;
+            border: 1px solid #A5A5A5;
+            border-radius: 10px;
+        }
+        .nav-bar {
+            margin: 0 auto;
+            padding: 0 1rem;
+            border: 1px solid #A5A5A5;
+            border-radius: 10px;
+            display: flex;
+            
+            justify-content: space-between; align-items: center;
+            width: 1024px;
+            height: 70px;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer">
+    <nav>
+        <header>
+            <div class="nav-bar">NAV BAR</div>
+        </header>
+    </nav>
+
+
+
+    <div class="wrapper">
+    <main>
+        <article>
+            <div class="container">ARTICLE</div>
+        </article>
+        <section>
+            <div class="container">SECTION</div>
+        </section>
+    </main>
+    <aside>
+        <div class="container">SIDE BAR</div>
+    </aside>
+    </div>
+    
+
+    <div class="wrapper">
+        <main>
+            <article>
+                <div class="container">ARTICLE</div>
+            </article>
+            <section>
+                <div class="container">SECTION</div>
+            </section>
+        </main>
+        <aside>
+            <div class="container">SIDE BAR</div>
+        </aside>
+        </div>
+
+    <footer>
+        <div class="container">FOOTER</div>
+    </footer>
+</div>
+
+
+    <script>
+        const header = document.querySelector("header");
+const main = document.querySelector(".wrapper");
+
+main.style.paddingTop = header.offsetHeight + "px";
+</body>
+</html>
