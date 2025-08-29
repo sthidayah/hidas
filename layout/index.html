@@ -12,7 +12,7 @@
             border: 1px solid #A5A5A5;
             border-radius: 10px;
         }
-        div.outer{
+        .outer{
             max-width: 1024px; margin: 0 auto;
         }
         header{
@@ -24,7 +24,7 @@
             border: 1px solid #A5A5A5;
             border-radius: 10px;
         }
-        div.nav-bar {
+        .nav-bar {
             margin: 0 auto;
             padding: 0 1rem;
             display: flex;
@@ -33,25 +33,26 @@
             width: 1024px;
             height: 70px;
         }
-        div.wrapper {
+        .wrapper {
             display: grid;
             grid-template-columns: 3fr 1fr;
             gap: 20px;
             padding: 140px 1rem 70px;
         }
-        div.container {
+        .container {
             display: flex; min-height: 150px;
             justify-content: center;
             align-items: center; 
             background-color: ghostwhite;
             flex-direction: column;
+            padding: 1rem 0;
         }
         article {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
-        div.article {
+        .article {
             display: flex;
             flex-direction: column;
             background-color: ghostwhite;
@@ -59,19 +60,19 @@
             justify-content: center;
             align-items: center;
         }
-        div.footer {
+        .footer {
            display: flex; min-height: 300px; 
            justify-content: center;
            align-items: center;
            background-color: ghostwhite;
         }
         @media (max-width: 1023px) {
-           div#aside {
+           #aside {
               height: 500px;
            }
         }
         @media (max-width: 768px) {
-           div.wrapper {
+           .wrapper {
               grid-template-columns: 1fr;
            }
            article {
