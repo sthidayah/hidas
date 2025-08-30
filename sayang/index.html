@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Popup Custom</title>
+  <style>
+    /* Styling popup */
+    .popup {
+      display: none; /* awalnya disembunyiin */
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+    .popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    button {
+      margin: 10px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+    <p>Kak, aku mau tanya. Boleh?</p>
+  <button onclick="showPopup()">Boleh, Hida. 😇</button>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <p>Apa Kakak sayang aku? 😸</p>
+      <button onclick="jawab('bgt')">Iya banget, dong. 🥰🤍</button>
+      <button onclick="jawab('hm')">Hmm, gimana yaa.</button>
+    </div>
+  </div>
+  
+  <div class="popup" id="popup-bgt">
+      <div class="popup-content">
+          <p>Makasih ya, Kak. Aku juga sayang Kakak. 😹🤍</p>
+          <button onclick="closePopup(this)">
+              Sama-sama. 🥰🤍
+          </button>
+      </div>
+  </div>
+  
+  <div class="popup" id="popup-hm">
+      <div class="popup-content">
+          <p>🥲😣</p>
+          <button onclick="jawab('bgt')">
+              Sayang kokkk. 🥰🤍
+          </button>
+      </div>
+  </div>
+
+  <script>
+    function showPopup() {
+      document.getElementById("popup").style.display = "flex";
+    }
+    function jawab(option) {
+      document.getElementById("popup").style.display = "none";
+      document.getElementById("popup-hm").style.display = "none";
+      if (option === "bgt") {
+        document.getElementById("popup-bgt").style.display = "flex";
+      } else {
+        document.getElementById("popup-hm").style.display = "flex";
+      }
+    }
+        function closePopup(button) {
+          let popup = button.closest(".popup");
+          popup.style.display = "none";
+        }
+  </script>
+</body>
+</html>
