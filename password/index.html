@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Halaman Rahasia</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .popup {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .popup-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    #content {
+      display: none; /* disembunyiin dulu */
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Popup Password -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h3>Masukkan Password 🔒</h3>
+      <input type="password" id="password" placeholder="Password">
+      <br><br>
+      <button onclick="cekPassword()">Masuk</button>
+    </div>
+  </div>
+
+  <!-- Konten Halaman -->
+  <div id="content">
+    <h1>Selamat Datang, Hida 🥰</h1>
+    <p>Ini isi halaman rahasiamu 🤍🌅</p>
+  </div>
+
+  <script>
+    function cekPassword() {
+      let pass = document.getElementById("password").value;
+
+      if (pass === "hidasayang") {
+        document.getElementById("popup").style.display = "none"; // tutup popup
+        document.getElementById("content").style.display = "block"; // munculin isi
+      } else {
+        alert("Password salah, coba lagi ya 😅");
+        document.getElementById("password").value = "";
+      }
+    }
+  </script>
+</body>
+</html>
