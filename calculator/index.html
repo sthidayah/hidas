@@ -22,7 +22,7 @@
     <button class="btn" onclick="bersihkan()">C</button>
     <button class="btn" onclick="toggleKurung()">( )</button>
     <button class="btn" onclick="tambahOperator('%')">%</button>
-    <button class="btn" onclick="tambahOperator('/')">÷</button>
+    <button class="btn" onclick="tambahOperator('/',':')">÷</button>
   </div>
 
   <!-- Row 2 -->
@@ -30,7 +30,7 @@
     <button class="btn" onclick="tambahAngka('1')">1</button>
     <button class="btn" onclick="tambahAngka('2')">2</button>
     <button class="btn" onclick="tambahAngka('3')">3</button>
-    <button class="btn" onclick="tambahOperator('*')">×</button>
+    <button class="btn" onclick="tambahOperator('*','×')">×</button>
   </div>
 
   <!-- Row 3 -->
@@ -65,21 +65,19 @@ function tambahAngka(angka){
     display.value += angka;
 }
 
-function tambahOperator(op){
+
+
+function tambahOperator(op, displayChar = null) {
     if(display.value === '') return;
     let lastChar = display.value.slice(-1);
     if(['+','-','*','/','%'].includes(lastChar)){
-        display.value = display.value.slice(0,-1) + op;
+        display.value = display.value.slice(0,-1) + (displayChar || op);
     } else {
-        display.value += op;
+        display.value += (displayChar || op);
     }
 }
 
-function tambahOperator(op, displayChar) {
-  let display = document.getElementById('display');
-  
-  // tambahin ke layar
-  display.value += displayChar;
+
 
 function bersihkan(){ display.value=''; openParens=0; }
 function hapus(){ display.value = display.value.slice(0,-1); }
