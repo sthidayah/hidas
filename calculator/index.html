@@ -75,6 +75,12 @@ function tambahOperator(op){
     }
 }
 
+function tambahOperator(op, displayChar) {
+  let display = document.getElementById('display');
+  
+  // tambahin ke layar
+  display.value += displayChar;
+
 function bersihkan(){ display.value=''; openParens=0; }
 function hapus(){ display.value = display.value.slice(0,-1); }
 
